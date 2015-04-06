@@ -64,6 +64,16 @@ hostsの例
 
 ライブラリ(MySQL/Python他)のインストールおよび、DB scheme/userを作成するPlaybookを実行します。
 
+MySQLのユーザーは、rootとapp(application用)、二つ作成されます。
+
+Playbook起動直後にパスワードの設定を求めてきますので入力してください。
+
+>$ ansible-playbook -v -i hosts retrosheet_server_01.yml
+
+>MySQL root password: : root-password
+
+>MySQL app password: : app-password
+
 続いて、Retrosheet用ライブラリ(chadwick)のインストールおよびRetrosheetのダウンロード、データの投入を実施します。
 
 >$ ansible-playbook -i hosts retrosheet_server_02.yml
