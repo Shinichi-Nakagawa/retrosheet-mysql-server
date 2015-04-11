@@ -1,0 +1,11 @@
+---
+- name: Apt install packages
+  apt: update_cache=yes pkg={{ item }}
+  with_items:
+    - git
+    - python-pip
+    - python-mysqldb
+    - python-sqlalchemy
+    - mysql-server-5.6
+- name: Apt upgrade
+  apt: upgrade=dist

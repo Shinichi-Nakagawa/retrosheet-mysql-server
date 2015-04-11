@@ -1,0 +1,9 @@
+---
+- name: get chadwick 
+  shell: wget {{ chadwick_url }} chdir={{ work_dir }}
+- shell: tar zxvf chadwick-0.6.4.tar.gz chdir={{ work_dir }}
+- name: build chadwick 
+  shell: ./configure chdir="{{ work_dir }}/{{ chadwick_dir }}"
+- shell: make chdir="{{ work_dir }}/{{ chadwick_dir }}"
+- shell: make install chdir="{{ work_dir }}/{{ chadwick_dir }}"
+- shell: ln -s /usr/local/lib/libchadwick.so.0 /usr/lib/libchadwick.so.0
