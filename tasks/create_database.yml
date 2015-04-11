@@ -1,0 +1,7 @@
+---
+- name: download events & game data
+  shell: python download.py -y {{ item }} chdir={{ py_retrosheet_script_dir }}
+  with_items: years
+- name: create retrosheet database
+  shell: python parse.py -y {{ item }} chdir={{ py_retrosheet_script_dir }}
+  with_items: years

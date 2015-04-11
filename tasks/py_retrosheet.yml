@@ -1,0 +1,5 @@
+---
+- name: clone project for py-retrosheet
+  shell: git clone {{ py_retrosheet }} chdir={{ work_dir }}
+- name: create py_retrosheet config.ini
+  template: src="tasks/templates/py_retrosheet_config.ini" dest="{{ work_dir }}/{{ py_retrosheet_config }}"

@@ -11,7 +11,7 @@ Retrosheet(http://www.retrosheet.org/)のEvent FileおよびGame LogsをMySQLか
 * Vagrant https://www.vagrantup.com/
 * ANSIBLE http://www.ansible.com/
 
-なお、Host PCは64bit OSかつ上記ライブラリが動けば何でもOKですが、作者はMac OS X 10.10.2で作成・検証しました。
+なお、Host PCは64bit OSかつ上記ライブラリが動けば何でもOKですが、作者はMac OS X 10.10.2およびMac OS X 10.10.3で作成・検証しました。
 
 ## install
 
@@ -48,35 +48,29 @@ vagrantが無事起動したらAnsibleの利用準備を行います。
 
 hostsの例
 >[retrosheet]
+
 >retrosheet_mysql_server
 
 準備ができたら以下のコマンドでpingが通るか確認してください。
 
 >$ ansible -i hosts retrosheet_mysql_server -m ping
 
+### MySQLパスワードの設定
+
+retrosheet_server.ymlを開き、MySQLパスワードの設定を行ってください。
+
+※そのままでも動きますが変更することをオススメします
+
+> mysql_root_db_password: "root_user_passowrd"
+> mysql_app_db_password: "app_user_password"
+
 ### Playbook実行
 
-ここまでできたら後はコマンドを2つ叩くだけです。
+ここまでできたら後はコマンドを叩くだけです。
 
-ライブラリ(MySQL/Python他)のインストールおよび、DB scheme/userを作成するPlaybookを実行します。
+以下のコマンドを実行してください。
 
->$ ansible-playbook -i hosts retrosheet_server_01.yml
-
-ライブラリ(MySQL/Python他)のインストールおよび、DB scheme/userを作成するPlaybookを実行します。
-
-MySQLのユーザーは、rootとapp(application用)、二つ作成されます。
-
-Playbook起動直後にパスワードの設定を求めてきますので入力してください。
-
->$ ansible-playbook -v -i hosts retrosheet_server_01.yml
-
->MySQL root password: : root-password
-
->MySQL app password: : app-password
-
-続いて、Retrosheet用ライブラリ(chadwick)のインストールおよびRetrosheetのダウンロード、データの投入を実施します。
-
->$ ansible-playbook -i hosts retrosheet_server_02.yml
+>$ ansible-playbook -i hosts retrosheet_server.yml
 
 ## データベースの使い方（例）
 

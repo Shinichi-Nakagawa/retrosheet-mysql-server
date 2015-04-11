@@ -1,0 +1,33 @@
+---
+- name: Retrosheet Database Server playbook
+  hosts: retrosheet
+  user: vagrant
+  sudo: yes
+  vars:
+      host: "localhost"
+      work_dir: "/home/vagrant"
+      mysql_root_db_password: "root_user_passowrd"
+      mysql_app_db_password: "app_user_password"
+      mysql_database: "retrosheet"
+  tasks:
+    - include: tasks/apt.yml
+    - include: tasks/py_retrosheet.yml
+      vars:
+          py_retrosheet: "https://github.com/wellsoliver/py-retrosheet.git"
+          py_retrosheet_config: "py-retrosheet/scripts/config.ini"
+    - include: tasks/chadwick.yml
+      vars:
+          work_dir: "/home/vagrant"
+          chadwick_url: "http://sourceforge.net/projects/chadwick/files/chadwick-0.6/chadwick-0.6.4/chadwick-0.6.4.tar.gz"
+          chadwick_dir: "chadwick-0.6.4"
+    - include: tasks/mysql.yml
+      vars:
+          vagrant_dir: "/vagrant"
+          mysql_schema_sql: "py-retrosheet/sql/schema.sql"
+          mysql_index_sql: "create_index.sql"
+    - include: tasks/create_database.yml
+      vars:
+          py_retrosheet_script_dir: "/home/vagrant/py-retrosheet/scripts"
+          years:
+              - 2014
+              - 2013
